@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <style>
+        #chatbox {
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <!-- Chat messages will go here -->
+    </div>
+    <input type="text" id="message" placeholder="Type a message...">
+    <button id="send">Send</button>
+
+    <script>
+        document.getElementById('send').addEventListener('click', function() {
+            var message = document.getElementById('message').value;
+            var chatbox = document.getElementById('chatbox');
+            chatbox.innerHTML += '<p>' + message + '</p>';
+            document.getElementById('message').value = '';
+        });
+    </script>
+</body>
+</html>

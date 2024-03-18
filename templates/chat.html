@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <style>
+        #chatbox {
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <!-- Chat messages will go here -->
+    </div>
+    <input type="text" id="message" placeholder="Type a message...">
+    <button id="send">Send</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#send').click(function() {
+                var message = $('#message').val();
+                $('#chatbox').append('<p>You: ' + message + '</p>');
+
+                $.post('/reply', { message: message }, function(data) {
+                    $('#chatbox').append('<p>Bot: ' + data.reply + '</p>');
+                });
+
+                $('#message').val('');
+            });
+        });
+    </script>
+</body>
+</html>
