@@ -2,7 +2,7 @@ from http import HTTPStatus
 import dashscope
 import json
 
-dashscope.api_key="sk-2f16c3a97e99442e823fcbb4c8cd9d66"
+dashscope.api_key="your_api_key”
 model_name = "qwen_max"
 
 def call_with_messages(input):
