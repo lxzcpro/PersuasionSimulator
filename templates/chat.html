@@ -4,14 +4,79 @@
     <title>Chat</title>
     <style>
         #chatbox {
-            width: 300px;
-            height: 300px;
+            width: 500px;
+            height: 600px;
             border: 1px solid black;
             overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center align chat messages */
+            justify-content: center; /* Center align chat messages */
+            padding: 10px;
         }
+
+        #chatbox p {
+            margin: 5px;
+        }
+
+        #message {
+            width: 50%;
+            margin-bottom: 30px;
+        }
+
+        #send {
+            width: 100%;
+            padding: 10px; /* Increase padding for better visibility */
+            background-color: #4CAF50; /* Green color for send button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #send:hover {
+            background-color: #45a049; /* Darker green color on hover */
+        }
+
+        #title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #description {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #DCF8C6;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: #E5E5EA;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover; /* Ensure the image fills the avatar container */
+        }
+
     </style>
 </head>
 <body>
+    <h1 id="title">Chat</h1>
+    <p id="description">Welcome to the chat room!</p>
+
     <div id="chatbox">
         <!-- Chat messages will go here -->
     </div>
@@ -23,10 +88,10 @@
         $(document).ready(function() {
             $('#send').click(function() {
                 var message = $('#message').val();
-                $('#chatbox').append('<p>You: ' + message + '</p>');
+                $('#chatbox').append('<p class="user-message"><img class="avatar" src="static/images/user-avatar.png"> You: ' + message + '</p>');
 
                 $.post('/reply', { message: message }, function(data) {
-                    $('#chatbox').append('<p>Bot: ' + data.reply + '</p>');
+                    $('#chatbox').append('<p class="bot-message"><img class="avatar" src="static/images/bot-avatar.png"> Bot: ' + data.reply + '</p>');
                 });
 
                 $('#message').val('');
