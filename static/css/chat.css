@@ -1,0 +1,70 @@
+#chatbox {
+    width: 500px;
+    height: 600px;
+    border: 1px solid black;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Left align chat messages */
+    padding: 10px;
+    background-color: #F2F2F2; /* Light gray background color */
+}
+
+#chatbox p {
+    margin: 5px;
+}
+
+#message {
+    width: 50%;
+    margin-bottom: 30px;
+    padding: 5px; /* Increase padding for better visibility */
+    border: 1px solid #ccc; /* Add border to input field */
+    border-radius: 5px;
+}
+
+#send {
+    width: 40%;
+    padding: 10px; /* Increase padding for better visibility */
+    background-color: #4CAF50; /* Green color for send button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#send:hover {
+    background-color: #45a049; /* Darker green color on hover */
+}
+
+#title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#description {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: #DCF8C6;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.bot-message {
+    align-self: flex-start;
+    background-color: #E5E5EA;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover; /* Ensure the image fills the avatar container */
+}

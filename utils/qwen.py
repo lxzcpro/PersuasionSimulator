@@ -2,8 +2,8 @@ from http import HTTPStatus
 import dashscope
 import json
 
-dashscope.api_key="your_api_key”
-model_name = "qwen_max"
+# dashscope.api_key="your_api_key”
+model_name = "qwen_turbo"
 
 def call_with_messages(input):
     messages = [{'role': 'system', 'content': 'You are a helpful assistant.'},
