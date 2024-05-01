@@ -31,6 +31,30 @@ document.getElementById('login-form').addEventListener('submit', function(event)
             'username': username,
             'password': password,
         }),
+    })
+    .then(response => response.json())
+    .then(messages => {
+        messages.forEach(message => {
+            if (message.sender === 'user') {
+                $('#chatbox').append('<p class="user-message"><img class="avatar" src="static/images/user-avatar.png"> You: ' + message.content + '</p>');
+            } else if (message.sender === 'bot') {
+                $('#chatbox').append('<p class="bot-message"><img class="avatar" src="static/images/bot-avatar.png"> Bot: ' + message.content + '</p>');
+            }
+        });
+        $('#loginModal').modal('hide');
+        location.reload();  // Add this line
+    });
+});
+
+
+document.getElementById('logoutButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    fetch('/logout', {
+        method: 'POST',
     }).then(response => response.text())
-      .then(text => alert(text));
+      .then(text => {
+        alert(text);
+        location.reload();
+      });
 });

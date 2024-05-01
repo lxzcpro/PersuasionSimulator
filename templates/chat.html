@@ -12,10 +12,11 @@
     <div>
         {% if 'username' in session %}
             Logged in as {{ session['username'] }}
+            <a href="/logout" class="btn btn-primary">Logout</a>
         {% else %}
             Not logged in
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
         {% endif %}
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
     </div>
 
     <!-- 登录模态窗口 -->
