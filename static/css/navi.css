@@ -1,0 +1,39 @@
+body, .navbar {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 90%; /* Add this line */
+}
+
+.navbar-brand, .navbar-menu {
+    margin: 0; /* Add this line */
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.navbar-menu li {
+    margin-left: 2em;
+}
+
+@media (max-width: 600px) {
+    .navbar-menu {
+        display: none;
+        flex-direction: column;
+    }
+
+    .navbar-menu li {
+        margin: 1em 0;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+}

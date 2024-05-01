@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-brand">Persuation Simulator</div>
+        <ul class="navbar-menu">
+            <li><a href="/">Home</a></li>
+            <li><a href="about">About</a></li>
+            <li><a href="contact">Contact</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <div class="contact-info">
+            <p><strong>CST1000 Group:</strong> Group 7</p>
+            <h2>Our Team</h2>
+            <div class="contact-item">
+                <p><strong>Member 1:</strong> member1@example.com</p>
+            </div>
+            <div class="contact-item">
+                <p><strong>Member 2:</strong> member2@example.com</p>
+            </div>
+            <div class="contact-item">
+                <p><strong>Member 2:</strong> member2@example.com</p>
+            </div>
+            <div class="contact-item">
+                <p><strong>Member 2:</strong> member2@example.com</p>
+            </div>
+            <div class="contact-item">
+                <p><strong>Member 2:</strong> member2@example.com</p>
+            </div>
+        </div>
+
+        <h2>Send us a message</h2>
+        <form class="contact-form">
+            <input type="text" name="name" placeholder="Your name" required>
+            <input type="email" name="email" placeholder="Your email" required>
+            <textarea name="message" placeholder="Your message" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,5 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#title {
+    color: #333;
+    text-align: center;
+    padding: 0px 0;
+    font-size: 2em;
+    margin-top: 0em
+}
+
+#description {
+    color: #666;
+    text-align: center;
+    padding-bottom: 0px;
+    font-size: 1.2em;
+    margin-top: 0em
+}
+
 #chatbox {
-    width: 500px;
+    width: 75%;
+    max-width: 1000px;
     height: 600px;
     border: 1px solid black;
     overflow: auto;
@@ -8,43 +35,35 @@
     align-items: flex-start; /* Left align chat messages */
     padding: 10px;
     background-color: #F2F2F2; /* Light gray background color */
+    margin-bottom: 20px;
 }
 
 #chatbox p {
     margin: 5px;
+    line-height: 1.5;
 }
 
 #message {
-    width: 50%;
-    margin-bottom: 30px;
-    padding: 5px; /* Increase padding for better visibility */
+    width: 70%;
+    padding: 10px; /* Increase padding for better visibility */
     border: 1px solid #ccc; /* Add border to input field */
     border-radius: 5px;
 }
 
 #send {
-    width: 40%;
-    padding: 10px; /* Increase padding for better visibility */
+    width: 35%;
+    padding: 10px 40px; /* Increase padding for better visibility */
     background-color: #4CAF50; /* Green color for send button */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 5px;
+    font-size: 16px; 
 }
 
 #send:hover {
     background-color: #45a049; /* Darker green color on hover */
-}
-
-#title {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-#description {
-    text-align: center;
-    margin-bottom: 20px;
 }
 
 .user-message {
@@ -52,6 +71,7 @@
     background-color: #DCF8C6;
     padding: 5px 10px;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .bot-message {
@@ -59,6 +79,7 @@
     background-color: #E5E5EA;
     padding: 5px 10px;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .avatar {
@@ -67,4 +88,54 @@
     border-radius: 50%;
     margin-right: 10px;
     object-fit: cover; /* Ensure the image fills the avatar container */
+}
+
+#clear-chat {
+    padding: 10px 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#clear-chat:hover {
+    background-color: #b71c1c; /* Dark red */
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;  /* Add some padding */
+    margin-bottom: 10px;
+}
+
+.input-row input,
+.input-row button {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+#container {
+    display: flex;
+}
+
+#sidebar {
+    width: 25%; /* Adjust as needed */
+}
+
+#chat-windows .chat-window {
+    display: none;
+}
+
+#chat-windows .chat-window.active {
+    display: block;
 }

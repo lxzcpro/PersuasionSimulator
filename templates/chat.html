@@ -3,20 +3,37 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}">
 </head>
 <body>
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">Final Project of CST1000</a>
+        <ul class="navbar-menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="about">About</a></li>
+            <li><a href="contact">Contact</a></li>
+        </ul>
+    </nav>
     <h1 id="title">Persuation Simulator</h1>
     <p id="description">Just for fun!</p>
+</body>
+    <div class="input-row">
+        <form id="api-key-form">
+            <label for="api-key">DASHSCOPE_API_KEY:</label>
+            <input type="text" id="api-key" name="api-key">
+            <input type="submit" value="Save">
+        </form>
 
-    <!-- 登录状态和登录按钮 -->
-    <div>
-        {% if 'username' in session %}
-            Logged in as {{ session['username'] }}
-            <a href="/logout" class="btn btn-primary">Logout</a>
-        {% else %}
-            Not logged in
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
-        {% endif %}
+        <!-- 登录状态和登录按钮 -->
+        <div>
+            {% if 'username' in session %}
+                Logged in as {{ session['username'] }}
+                <a href="/logout" class="btn btn-primary">Logout</a>
+            {% else %}
+                Not logged in
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
+            {% endif %}
+        </div>
     </div>
 
     <!-- 登录模态窗口 -->
@@ -77,17 +94,35 @@
             </div>
         </div>
     </div>
-
-    <div id="chatbox">
-        <!-- Chat messages will go here -->
+    <div id = "container">
+        <div id="sidebar">
+            <div class="pane" data-target="chat1">
+                <h3>Chat 1</h3>
+                <p>Subtitle 1</p>
+            </div>
+            <div class="pane" data-target="chat2">
+                <h3>Chat 2</h3>
+                <p>Subtitle 2</p>
+            </div>
+            <!-- Add more panes as needed -->
+        </div>
+        
+        <div id="chatbox">
+            <div id="chat1" class="chat-window">Chat window 1</div>
+            <div id="chat2" class="chat-window">Chat window 2</div>
+            <!-- Chat messages will go here -->
+        </div>
     </div>
     <input type="text" id="message" placeholder="Type a message...">
-    <button id="send">Send</button>
+    <div class="button-row">
+        <button id="send">Send</button>
+        <button id="clear-chat">Clear Chat</button>
 
     <script src="../static/js/login.js"></script>
     <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='/js/bootstrap.min.js')}}"></script>
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
     <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navi.js') }}"></script>
 </body>
 </html>

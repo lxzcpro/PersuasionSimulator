@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from utils.qwen import call_with_messages
 from datetime import datetime
 from utils.tools import jsonify
+import dashscope
+import os
 
 app = Flask(__name__)
 app.secret_key = 'mysecret'
@@ -12,6 +14,14 @@ client = PyMongo(app)
 
 users_collection = client.db.users
 messages_collection = client.db.messages
+
+@app.route('/save_api_key', methods=['POST'])
+def save_api_key():
+    api_key = request.form.get('api-key')
+    if not api_key:
+        return jsonify({"error": "API key not provided"})
+    dashscope.api_key = api_key
+    return jsonify({"success": True})
 
 @app.route('/reply', methods=['POST'])
 def reply():
@@ -97,10 +107,27 @@ def login():
 def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
-    
+
+@app.route('/clear_chat', methods=['POST'])
+def clear_chat():
+    try:
+        messages_collection.delete_many({})
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+        
 @app.route('/')
 def home():
     return render_template('chat.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 
 if __name__ == '__main__':
     try:
