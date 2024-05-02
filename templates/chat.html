@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <nav class="navbar">
@@ -16,7 +17,7 @@
     </nav>
     <h1 id="title">Persuation Simulator</h1>
     <p id="description">Just for fun!</p>
-</body>
+
     <div class="input-row">
         <form id="api-key-form">
             <label for="api-key">DASHSCOPE_API_KEY:</label>
@@ -28,7 +29,7 @@
         <div>
             {% if 'username' in session %}
                 Logged in as {{ session['username'] }}
-                <a href="/logout" class="btn btn-primary">Logout</a>
+                <a id="logoutButton" href="/logout" class="btn btn-primary">Logout</a>
             {% else %}
                 Not logged in
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
@@ -94,7 +95,7 @@
             </div>
         </div>
     </div>
-    <div id = "container">
+    <div id="container">
         <div id="sidebar">
             <div class="pane" data-target="chat1">
                 <h3>Chat 1</h3>
@@ -113,16 +114,22 @@
             <!-- Chat messages will go here -->
         </div>
     </div>
-    <input type="text" id="message" placeholder="Type a message...">
-    <div class="button-row">
-        <button id="send">Send</button>
-        <button id="clear-chat">Clear Chat</button>
+    <form id="message-form">
+        <input type="hidden" id="user-id" name="user-id" value="{% if 'user_id' in session %}{{ session['user_id'] }}{% endif %}">
+        <input type="hidden" id="chat-id" name="chat-id" value="chat1">
+        <input type="text" id="message" name="message" placeholder="Type a message...">
+        <div class="button-row">
+            <button type="submit">Send</button>
+            <button id="clear-chat">Clear Chat</button>
+        </div>
+    </form>
 
-    <script src="../static/js/login.js"></script>
-    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='/js/bootstrap.min.js')}}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
     <script src="{{ url_for('static', filename='js/navi.js') }}"></script>
 </body>
 </html>

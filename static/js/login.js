@@ -1,3 +1,4 @@
+// 当注册表单被提交时，阻止默认的提交行为，然后发送一个POST请求到'/register'路由
 document.getElementById('register-form').addEventListener('submit', function(event) {
     event.preventDefault();
     var username = document.getElementById('register-username').value;
@@ -13,10 +14,11 @@ document.getElementById('register-form').addEventListener('submit', function(eve
             'username': username,
             'password': password,
         }),
-    }).then(response => response.text())
+    }).then(response => response.json())
       .then(text => alert(text));
 });
 
+// 当登录表单被提交时，阻止默认的提交行为，然后发送一个POST请求到'/login'路由
 document.getElementById('login-form').addEventListener('submit', function(event) {
     event.preventDefault();
     var username = document.getElementById('login-username').value;
@@ -33,28 +35,45 @@ document.getElementById('login-form').addEventListener('submit', function(event)
         }),
     })
     .then(response => response.json())
-    .then(messages => {
-        messages.forEach(message => {
-            if (message.sender === 'user') {
-                $('#chatbox').append('<p class="user-message"><img class="avatar" src="static/images/user-avatar.png"> You: ' + message.content + '</p>');
-            } else if (message.sender === 'bot') {
-                $('#chatbox').append('<p class="bot-message"><img class="avatar" src="static/images/bot-avatar.png"> Bot: ' + message.content + '</p>');
-            }
-        });
-        $('#loginModal').modal('hide');
-        location.reload();  // Add this line
+    .then(data => {
+        if (data.success) {
+            $('#chatbox').append('<p class="user-message"><img class="avatar" src="static/images/user-avatar.png"> You: ' + data.message + '</p>');
+            $('#loginModal').modal('hide');
+            location.reload();
+        } else {
+            // 显示错误消息
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        // 处理解析 JSON 时的错误
+        console.error('Error:', error);
     });
 });
+// 获取注销按钮
+var logoutButton = document.getElementById('logoutButton');
 
+if (logoutButton) {
+    logoutButton.addEventListener('click', function(event) {
+        event.preventDefault();
 
-document.getElementById('logoutButton').addEventListener('click', function(event) {
-    event.preventDefault();
-    
-    fetch('/logout', {
-        method: 'POST',
-    }).then(response => response.text())
-      .then(text => {
-        alert(text);
-        location.reload();
-      });
-});
+        fetch('/logout', {
+            method: 'POST',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(data.message);
+            if (data.success) {
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+    });
+}

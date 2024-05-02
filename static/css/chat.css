@@ -25,9 +25,8 @@ body {
 }
 
 #chatbox {
-    width: 75%;
-    max-width: 1000px;
-    height: 600px;
+    width: 500px; /* Fixed width */
+    height: 600px; /* Fixed height */
     border: 1px solid black;
     overflow: auto;
     display: flex;
@@ -35,7 +34,7 @@ body {
     align-items: flex-start; /* Left align chat messages */
     padding: 10px;
     background-color: #F2F2F2; /* Light gray background color */
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 #chatbox p {
@@ -130,6 +129,7 @@ body {
 
 #sidebar {
     width: 25%; /* Adjust as needed */
+    border: 1px solid #ccc; /* Add border */
 }
 
 #chat-windows .chat-window {
