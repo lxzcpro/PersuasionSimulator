@@ -41,10 +41,10 @@ def reply():
     # Generate a reply
     reply = call_with_messages(message)  # Use your model to generate a reply
     # Save the reply to the database
-    messages_collection.insert_one({"username": "Bot", "message": reply, "timestamp": timestamp, "chat_id": chat_id})
+    messages_collection.insert_one({"username": "Bot", "user_chatting_with": username, "message": reply, "timestamp": timestamp, "chat_id": chat_id})
     time.sleep(1)  # Wait for the new messages to be written to the database
     # Get all messages for the current user and chat
-    messages = messages_collection.find({"chat_id": chat_id}).sort("timestamp", 1)
+    messages = messages_collection.find({"chat_id": chat_id, "$or": [{"username": username}, {"user_chatting_with": username}]}).sort("timestamp", 1)
     # Convert the messages to a list of dictionaries
     messages = [message for message in messages]
     messages = to_json(messages)
@@ -58,29 +58,47 @@ def load_chat():
     username = session['username']  # Get the username from the session
     chat_id = request.args.get('chat_id')  # Assuming chat_id is passed from the frontend
     # Get all messages for the logged-in user and specific chat
-    messages = messages_collection.find({"chat_id": chat_id}).sort("timestamp", 1)
+    messages = messages_collection.find({"chat_id": chat_id, "$or": [{"username": username}, {"user_chatting_with": username}]}).sort("timestamp", 1)
     # Convert the messages to a list of dictionaries
     messages = [message for message in messages]
+    # Convert ObjectId to string
+    for message in messages:
+        message['_id'] = str(message['_id'])
     return jsonify({'messages': messages})
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
     if 'username' not in session:
-        return "Error: Please log in to use the chat feature"
+        return jsonify({"error": "Please log in to use the chat feature"})
     username = session['username']  # Get the username from the session
-    chat_id = request.json.get('chat-id')
-    message = request.json.get('message')
-    timestamp = datetime.utcnow()  # Use UTC time for consistency across different time zones
-    messages_collection.insert_one({"chat_id": chat_id, "username": username, "message": message, "timestamp": timestamp})
-    return "Message sent successfully"
+    message = request.json['message']  # Get the message from the request
+    chat_id = request.json['chat_id']  # Get the chat_id from the request
+    # Store the message in the database with the username and chat_id
+    messages_collection.insert_one({"message": message, "username": username, "chat_id": chat_id, "timestamp": datetime.utcnow()})
+    
+    # 如果消息为空，直接返回，不插入数据库
+    if message is None or message.strip() == '':
+        return jsonify({"success": True})
+    
+    try:
+        messages_collection.insert_one({
+            "username": username,
+            "message": message,
+            "chat_id": chat_id,
+            "timestamp": datetime.datetime.utcnow()
+        })
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
 
 @app.route('/get_chat/<chat_id>/<user_id>', methods=['GET'])
 def get_chat(chat_id, user_id):
     if 'username' not in session:
         return jsonify({"error": "Please log in to use the chat feature"})
     username = session['username']  # Get the username from the session
-    if username != user_id:
-        return jsonify({"error": "Unauthorized access"})
+    # if username != user_id:
+    #     return jsonify({"error": "Unauthorized access"})
     # Get messages for the specified chat_id and username
     messages = messages_collection.find({"chat_id": chat_id, "username": username}).sort("timestamp", 1)
     # Convert the messages to a list of dictionaries
@@ -91,6 +109,7 @@ def get_chat(chat_id, user_id):
         message['_id'] = str(message['_id'])
     
     return jsonify({'messages': messages})
+
 
 # @app.route('/get_chat', methods=['GET'])
 # def get_chat_redirect():
@@ -135,9 +154,11 @@ def login():
             return jsonify({"message": "Error: Incorrect password", "success": False})
         else:
             session['username'] = username  # Store the username in the session
+            session['user_id'] = str(user['_id'])  # Store the user_id in the session
             return jsonify({"message": "User logged in successfully", "success": True})
     else:
         return render_template('login.html')  # Assuming you have a login.html file in your templates folder
+
     
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -151,7 +172,7 @@ def clear_chat(chat_id, user_id):
     username = session['username']
     try:
         # 删除特定用户在特定聊天下的所有消息，包括与机器人的聊天记录
-        messages_collection.delete_many({"chat_id": chat_id, "username": {"$in": [username, user_id]}})
+        messages_collection.delete_many({"chat_id": chat_id, "$or": [{"username": username}, {"user_chatting_with": username}]})
         return jsonify({"success": True})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})

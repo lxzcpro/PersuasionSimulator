@@ -2,13 +2,21 @@ $(document).ready(function() {
     // 加载初始聊天历史
     var initialUserId = $('#user-id').val(); // 获取用户ID
     var initialChatId = $('#chat-id').val();
+    console.log("User ID: " + initialUserId); // 在控制台打印用户ID
+    console.log("Chat ID: " + initialChatId);
     loadChatHistory(initialUserId, initialChatId);
 
     // 处理表单提交
     $("#message-form").submit(function(event) {
         event.preventDefault();  // 阻止表单正常提交
         var chat_id = $("#chat-id").val();
-        var message = $("#message").val();
+        var message = $("#message").val().trim(); // FIXME: 删除的时候出错
+
+        if (message === '') {
+            alert('消息不能为空！');
+            return;
+        }
+
         $('#chatbox').append(createMessageHtml('You', message, 'user'));
         $.ajax({
             url: '/reply',
@@ -27,6 +35,8 @@ $(document).ready(function() {
                             var message = data.messages[i];
                             $('#chatbox').append(createMessageHtml(message.username, message.message, message.username === 'Bot' ? 'bot' : 'user'));
                         }
+                        // Scroll to the bottom
+                        $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
                     }
                 } catch (error) {
                     console.error('处理响应时出错：', error);
@@ -34,16 +44,17 @@ $(document).ready(function() {
             }
         });
         $("#message").val('');
-        $('.chat-link').click(function(event) {
-            event.preventDefault();  // 阻止链接的默认行为
-            var chatId = $(this).data('chat-id');  // 假设聊天链接有一个 data-chat-id 属性，包含聊天的 ID
-            loadChatHistory(chatId);
-        });
     });
-    
-    function loadChatHistory(chatId) {
-        var userId = $('#user-id').val(); // 获取用户ID
-        $.get('/get_chat/' + chatId + '/' + userId, function(data) {  // Provide a URL for the $.get method
+
+    $('.chat-link').click(function(event) {
+        event.preventDefault();  // 阻止链接的默认行为
+        var chatId = $(this).data('chat-id');  // 假设聊天链接有一个 data-chat-id 属性，包含聊天的 ID
+        var userId = $('#user-id').val(); // 获取用户I
+        loadChatHistory(userId, chatId);
+    });
+
+    function loadChatHistory(userId, chatId) {
+        $.get('/load_chat?chat_id=' + chatId, function(data) {  // Update the URL for the $.get method
             try {
                 if (data.error) {
                     alert(data.error);
@@ -54,6 +65,8 @@ $(document).ready(function() {
                         var message = data.messages[i];
                         $('#chatbox').append(createMessageHtml(message.username, message.message, message.username === 'Bot' ? 'bot' : 'user'));
                     }
+                    // Scroll to the bottom
+                    $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
                 }
             } catch (error) {
                 console.error('Error processing response:', error);
@@ -70,7 +83,8 @@ $(document).ready(function() {
         $('.chat-window').removeClass('active');
         $('#' + target).addClass('active');
         // 加载新聊天窗口的聊天历史
-        loadChatHistory(target);
+        var userId = $('#user-id').val(); // 获取用户ID
+        loadChatHistory(userId, target);
     });
 
     // Handle API key form submission
@@ -111,7 +125,6 @@ $(document).ready(function() {
             });
         }
     });
-    
 
     function createMessageHtml(username, message, userType) {
         var avatar = 'static/images/' + (userType === 'bot' ? 'bot-avatar.png' : 'user-avatar.png');
