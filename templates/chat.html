@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
@@ -97,20 +98,50 @@
     </div>
     <div id="container">
         <div id="sidebar">
-            <div class="pane" data-target="chat1">
-                <h3>Chat 1</h3>
-                <p>Subtitle 1</p>
+            <div class="chat" data-target="chat1">
+                <img src="path_to_image" alt="User Image"> <!-- 添加图片元素 -->
+                <div>
+                    <h3>Chat 1</h3>
+                    <p>Subtitle 1</p>
+                </div>
             </div>
-            <div class="pane" data-target="chat2">
-                <h3>Chat 2</h3>
-                <p>Subtitle 2</p>
+            <div class="chat" data-target="chat2">
+                <img src="path_to_image" alt="User Image"> <!-- 添加图片元素 -->
+                <div>
+                    <h3>Chat 2</h3>
+                    <p>Subtitle 2</p>
+                </div>
             </div>
-            <!-- Add more panes as needed -->
+            <div class="chat" data-target="chat3">
+                <img src="path_to_image" alt="User Image"> <!-- 添加图片元素 -->
+                <div>
+                    <h3>Chat 3</h3>
+                    <p>Subtitle 3</p>
+                </div>
+            </div>
+            <div class="chat" data-target="chat4">
+                <img src="path_to_image" alt="User Image"> <!-- 添加图片元素 -->
+                <div>
+                    <h3>Chat 4</h3>
+                    <p>Subtitle 4</p>
+                </div>
+            </div>
+            <div class="chat" data-target="chat5">
+                <img src="path_to_image" alt="User Image"> <!-- 添加图片元素 -->
+                <div>
+                    <h3>Chat 5</h3>
+                    <p>Subtitle 5</p>
+                </div>
+            </div>
+            <!-- Add more chats as needed -->
         </div>
         
         <div id="chatbox">
-            <div id="chat1" class="chat-window">Chat window 1</div>
-            <div id="chat2" class="chat-window">Chat window 2</div>
+            <div id="chat1" class="chat-window"></div>
+            <div id="chat2" class="chat-window"></div>
+            <div id="chat3" class="chat-window"></div>
+            <div id="chat4" class="chat-window"></div>
+            <div id="chat5" class="chat-window"></div>
             <!-- Chat messages will go here -->
         </div>
     </div>

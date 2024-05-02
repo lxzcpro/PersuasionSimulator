@@ -1,11 +1,12 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif; /* 更现代的字体 */
     background-color: #f0f0f0;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: all 0.3s ease; /* 添加过渡效果 */
 }
 
 #title {
@@ -25,16 +26,17 @@ body {
 }
 
 #chatbox {
-    width: 500px; /* Fixed width */
-    height: 600px; /* Fixed height */
-    border: 1px solid black;
+    width: 900px;
+    height: 600px;
+    border: 1px solid #ccc; /* 更淡的边框颜色 */
     overflow: auto;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Left align chat messages */
+    align-items: flex-start;
     padding: 10px;
-    background-color: #F2F2F2; /* Light gray background color */
+    background-color: #F2F2F2;
     margin-bottom: 15px;
+    transition: all 0.3s ease; /* 添加过渡效果 */
 }
 
 #chatbox p {
@@ -51,18 +53,19 @@ body {
 
 #send {
     width: 35%;
-    padding: 10px 40px; /* Increase padding for better visibility */
-    background-color: #4CAF50; /* Green color for send button */
+    padding: 10px 40px;
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-left: 5px;
-    font-size: 16px; 
+    font-size: 16px;
+    transition: all 0.3s ease; /* 添加过渡效果 */
 }
 
 #send:hover {
-    background-color: #45a049; /* Darker green color on hover */
+    background-color: #45a049;
 }
 
 .user-message {
@@ -91,15 +94,16 @@ body {
 
 #clear-chat {
     padding: 10px 20px;
-    background-color: #f44336; /* Red */
+    background-color: #f44336;
     color: white;
     border: none;
     cursor: pointer;
     margin-top: 10px;
+    transition: all 0.3s ease; /* 添加过渡效果 */
 }
 
 #clear-chat:hover {
-    background-color: #b71c1c; /* Dark red */
+    background-color: #b71c1c;
 }
 
 .button-row {
@@ -125,17 +129,34 @@ body {
 
 #container {
     display: flex;
+    justify-content: space-between; /* 让对话框和侧边栏贴在一起 */
 }
 
 #sidebar {
-    width: 25%; /* Adjust as needed */
-    border: 1px solid #ccc; /* Add border */
+    width: 25%; /* 调整侧边栏的宽度 */
+    border-right: 1px solid #ccc; /* 在侧边栏的右侧添加边框 */
+    background-color: #f8f8f8; /* 添加背景色 */
+    padding: 10px; /* 添加内边距 */
+    height: 600px; /* 让侧边栏占满整个视口的高度 */
+    overflow-y: auto; /* 添加滚动条 */
 }
 
-#chat-windows .chat-window {
-    display: none;
+#sidebar .chat {
+    border-bottom: 1px solid #ccc; /* 在每个聊天之间添加横线 */
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* 添加过渡效果 */
+    display: flex; /* 让聊天的内容在一行内显示 */
+    align-items: center; /* 垂直居中对齐内容 */
 }
 
-#chat-windows .chat-window.active {
-    display: block;
+#sidebar .chat.active {
+    background-color: #f0f0f0; /* 高亮当前选择的聊天 */
+}
+
+#sidebar .chat img {
+    width: 50px; /* 调整图片的大小 */
+    height: 50px;
+    border-radius: 50%; /* 让图片呈现为圆形 */
+    margin-right: 10px; /* 在图片和文字之间添加一些间距 */
 }

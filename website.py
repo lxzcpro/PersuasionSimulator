@@ -74,11 +74,13 @@ def send_message():
     messages_collection.insert_one({"chat_id": chat_id, "username": username, "message": message, "timestamp": timestamp})
     return "Message sent successfully"
 
-@app.route('/get_chat/<chat_id>', methods=['GET'])
-def get_chat(chat_id):
+@app.route('/get_chat/<chat_id>/<user_id>', methods=['GET'])
+def get_chat(chat_id, user_id):
     if 'username' not in session:
         return jsonify({"error": "Please log in to use the chat feature"})
     username = session['username']  # Get the username from the session
+    if username != user_id:
+        return jsonify({"error": "Unauthorized access"})
     # Get messages for the specified chat_id and username
     messages = messages_collection.find({"chat_id": chat_id, "username": username}).sort("timestamp", 1)
     # Convert the messages to a list of dictionaries
@@ -90,12 +92,12 @@ def get_chat(chat_id):
     
     return jsonify({'messages': messages})
 
-@app.route('/get_chat', methods=['GET'])
-def get_chat_redirect():
-    if 'username' not in session:
-        return jsonify({"error": "Please log in to use the chat feature"})
-    chat_id = request.args.get('chat_id')  # Assuming chat_id is passed from the frontend
-    return redirect(url_for('get_chat', chat_id=chat_id))
+# @app.route('/get_chat', methods=['GET'])
+# def get_chat_redirect():
+#     if 'username' not in session:
+#         return jsonify({"error": "Please log in to use the chat feature"})
+#     chat_id = request.args.get('chat_id')  # Assuming chat_id is passed from the frontend
+#     return redirect(url_for('get_chat', chat_id=chat_id))
 
 
 @app.route('/get_messages', methods=['GET'])
@@ -142,18 +144,18 @@ def logout():
     session.pop('username', None)
     return jsonify({"message": "User logged out successfully", "success": True})
 
-@app.route('/clear_chat/<chat_id>', methods=['POST'])
-def clear_chat(chat_id):
+@app.route('/clear_chat/<chat_id>/<user_id>', methods=['POST'])
+def clear_chat(chat_id, user_id):
     if 'username' not in session:
         return jsonify({"error": "Please log in to use the chat feature"})
     username = session['username']
     try:
-        # 删除特定用户在特定聊天下的所有消息
-        messages_collection.delete_many({"chat_id": chat_id, "username": username})
+        # 删除特定用户在特定聊天下的所有消息，包括与机器人的聊天记录
+        messages_collection.delete_many({"chat_id": chat_id, "username": {"$in": [username, user_id]}})
         return jsonify({"success": True})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
-        
+    
 @app.route('/')
 def home():
     return render_template('chat.html')
