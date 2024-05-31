@@ -16,6 +16,7 @@ client = PyMongo(app)
 
 users_collection = client.db.users
 messages_collection = client.db.messages
+chat_settings_collection = client.db.chat_settings
 
 def to_json(data):
     return json_util.dumps(data)
@@ -32,23 +33,23 @@ def save_api_key():
 def reply():
     if 'username' not in session:
         return jsonify({"error": "Please log in to use the chat feature"})
-    username = session['username']  # Get the username from the session
+    username = session['username']
     message = request.json['message']
-    chat_id = request.json.get('chat-id')  # Assuming chat_id is passed from the frontend
-    timestamp = datetime.utcnow()  # Use UTC time for consistency across different time zones
-    # Save the user's message to the database
+    chat_id = request.json.get('chat-id')
+    timestamp = datetime.utcnow()
+    
     messages_collection.insert_one({"username": username, "message": message, "timestamp": timestamp, "chat_id": chat_id})
-    # Generate a reply
-    reply = call_with_messages(message)  # Use your model to generate a reply
-    # Save the reply to the database
+    
+    reply = call_with_messages(message, chat_id)
+    
     messages_collection.insert_one({"username": "Bot", "user_chatting_with": username, "message": reply, "timestamp": timestamp, "chat_id": chat_id})
-    time.sleep(1)  # Wait for the new messages to be written to the database
-    # Get all messages for the current user and chat
+    time.sleep(1)
+    
     messages = messages_collection.find({"chat_id": chat_id, "$or": [{"username": username}, {"user_chatting_with": username}]}).sort("timestamp", 1)
-    # Convert the messages to a list of dictionaries
     messages = [message for message in messages]
     messages = to_json(messages)
-    messages = json.loads(messages)  # Convert the JSON string back to a Python object
+    messages = json.loads(messages)
+    
     return jsonify({'messages': messages, 'reply': reply})
 
 @app.route('/load_chat', methods=['GET'])
