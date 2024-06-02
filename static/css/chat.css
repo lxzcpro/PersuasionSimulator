@@ -1,6 +1,8 @@
 body {
     font-family: 'Roboto', sans-serif; /* 更现代的字体 */
-    background-color: #f0f0f0;
+    background-image: linear-gradient(52deg, #2daddb, #92ada5, #bdae6f, #dbaf2a); /* 添加背景图片 */
+    background-size: cover; /* 背景图片适应屏幕大小 */
+    background-position: center; /* 背景图片居中 */
     margin: 0;
     padding: 0;
     display: flex;
@@ -12,17 +14,18 @@ body {
 #title {
     color: #333;
     text-align: center;
-    padding: 0px 0;
-    font-size: 2em;
-    margin-top: 0em
+    padding: 20px 0; /* 增加上下内边距 */
+    font-size: 2.5em; /* 增大字体 */
+    margin-top: 20px; /* 增加顶部间距 */
+    font-weight: bold; /* 加粗字体 */
 }
 
 #description {
     color: #666;
     text-align: center;
-    padding-bottom: 0px;
-    font-size: 1.2em;
-    margin-top: 0em
+    padding-bottom: 10px; /* 增加底部内边距 */
+    font-size: 1.5em; /* 增大字体 */
+    margin-top: 10px; /* 增加顶部间距 */
 }
 
 #chatbox {
@@ -33,34 +36,37 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 10px;
-    background-color: #F2F2F2;
-    margin-bottom: 15px;
+    padding: 20px; /* 增加内边距 */
+    background-color: #ffffff; /* 白色背景 */
+    border-radius: 10px; /* 圆角边框 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+    margin-bottom: 20px; /* 增加底部间距 */
     transition: all 0.3s ease; /* 添加过渡效果 */
 }
 
 #chatbox p {
-    margin: 5px;
-    line-height: 1.5;
+    margin: 10px 0; /* 增加上下间距 */
+    line-height: 1.6; /* 增加行高 */
 }
 
 #message {
     width: 70%;
-    padding: 10px; /* Increase padding for better visibility */
-    border: 1px solid #ccc; /* Add border to input field */
-    border-radius: 5px;
+    padding: 15px; /* 增加内边距 */
+    border: 1px solid #ccc; /* 添加边框 */
+    border-radius: 10px; /* 圆角边框 */
+    font-size: 1em; /* 增大字体 */
 }
 
 #send {
-    width: 35%;
-    padding: 10px 40px;
+    width: 25%; /* 调整按钮宽度 */
+    padding: 15px 40px; /* 增加内边距 */
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px; /* 圆角边框 */
     cursor: pointer;
-    margin-left: 5px;
-    font-size: 16px;
+    margin-left: 10px; /* 增加左边距 */
+    font-size: 1em; /* 增大字体 */
     transition: all 0.3s ease; /* 添加过渡效果 */
 }
 
@@ -71,34 +77,37 @@ body {
 .user-message {
     align-self: flex-end;
     background-color: #DCF8C6;
-    padding: 5px 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    padding: 10px 15px; /* 增加内边距 */
+    border-radius: 15px; /* 圆角边框 */
+    margin-bottom: 10px; /* 增加底部间距 */
+    max-width: 80%; /* 设置最大宽度 */
 }
 
 .bot-message {
     align-self: flex-start;
     background-color: #E5E5EA;
-    padding: 5px 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    padding: 10px 15px; /* 增加内边距 */
+    border-radius: 15px; /* 圆角边框 */
+    margin-bottom: 10px; /* 增加底部间距 */
+    max-width: 80%; /* 设置最大宽度 */
 }
 
 .avatar {
-    width: 30px;
-    height: 30px;
+    width: 40px; /* 调整头像大小 */
+    height: 40px;
     border-radius: 50%;
-    margin-right: 10px;
-    object-fit: cover; /* Ensure the image fills the avatar container */
+    margin-right: 15px; /* 增加右边距 */
+    object-fit: cover; /* 保持图片比例 */
 }
 
 #clear-chat {
-    padding: 10px 20px;
+    padding: 15px 25px; /* 增加内边距 */
     background-color: #f44336;
     color: white;
     border: none;
+    border-radius: 10px; /* 圆角边框 */
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 10px; /* 增加顶部间距 */
     transition: all 0.3s ease; /* 添加过渡效果 */
 }
 
@@ -110,15 +119,17 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px; /* 增加底部间距 */
 }
 
 .input-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;  /* Add some padding */
-    margin-bottom: 10px;
+    padding: 15px; /* 增加内边距 */
+    margin-bottom: 15px; /* 增加底部间距 */
+    width: 100%; /* 设置宽度 */
+    box-sizing: border-box; /* 包含内边距和边框 */
 }
 
 .input-row input,
@@ -130,24 +141,30 @@ body {
 #container {
     display: flex;
     justify-content: space-between; /* 让对话框和侧边栏贴在一起 */
+    width: 100%; /* 设置宽度 */
+    max-width: 1200px; /* 设置最大宽度 */
+    margin: 0 auto; /* 居中对齐 */
 }
 
 #sidebar {
-    width: 25%; /* 调整侧边栏的宽度 */
+    width: 30%; /* 调整侧边栏的宽度 */
     border-right: 1px solid #ccc; /* 在侧边栏的右侧添加边框 */
-    background-color: #f8f8f8; /* 添加背景色 */
-    padding: 10px; /* 添加内边距 */
+    background-color: #ffffff; /* 白色背景 */
+    padding: 20px; /* 添加内边距 */
     height: 600px; /* 让侧边栏占满整个视口的高度 */
     overflow-y: auto; /* 添加滚动条 */
+    border-radius: 10px; /* 圆角边框 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影 */
 }
 
 #sidebar .chat {
     border-bottom: 1px solid #ccc; /* 在每个聊天之间添加横线 */
-    padding: 10px;
+    padding: 15px;
     cursor: pointer;
     transition: all 0.3s ease; /* 添加过渡效果 */
     display: flex; /* 让聊天的内容在一行内显示 */
     align-items: center; /* 垂直居中对齐内容 */
+    border-radius: 10px; /* 圆角边框 */
 }
 
 #sidebar .chat.active {
@@ -158,5 +175,5 @@ body {
     width: 50px; /* 调整图片的大小 */
     height: 50px;
     border-radius: 50%; /* 让图片呈现为圆形 */
-    margin-right: 10px; /* 在图片和文字之间添加一些间距 */
+    margin-right: 15px; /* 在图片和文字之间添加一些间距 */
 }

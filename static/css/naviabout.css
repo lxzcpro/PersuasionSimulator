@@ -1,7 +1,6 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-image: linear-gradient(52deg, #2daddb, #92ada5, #bdae6f, #dbaf2a);
-    background-size: cover;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
     display: flex;
@@ -12,20 +11,18 @@ body {
 
 .navbar {
     width: 100%;
-    background-color: rgba(76, 175, 80, 0.9); /* 半透明背景色 */
+    background-color: #4CAF50;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 0;
 }
 
 .navbar-brand {
     font-size: 1.5em;
     font-weight: bold;
     color: white;
-    margin: 0;
 }
 
 .navbar-menu {
@@ -33,11 +30,10 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    transition: all 0.3s ease;
 }
 
 .navbar-menu li {
-    margin-left: 2em;
+    margin-left: 20px;
 }
 
 .navbar-menu a {
@@ -49,29 +45,6 @@ body {
 
 .navbar-menu a:hover {
     color: #d4d4d4;
-}
-
-.navbar-toggle {
-    display: none;
-    font-size: 2em;
-    color: white;
-    cursor: pointer;
-}
-
-@media (max-width: 600px) {
-    .navbar-menu {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .navbar-menu li {
-        margin: 1em 0;
-    }
-
-    .navbar-toggle {
-        display: block;
-    }
 }
 
 h1, h2 {
@@ -102,4 +75,3 @@ h2 {
     max-width: 1000px;
     margin: 20px;
 }
-
