@@ -192,6 +192,10 @@ def about():
 def contact():
     return render_template('contact.html')
 
+@app.route('/tools')
+def tools():
+    return render_template('tools.html')
+
 
 if __name__ == '__main__':
     try:
