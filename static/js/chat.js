@@ -1,4 +1,28 @@
 $(document).ready(function() {
+    // 示例头像路径数据结构，可以根据需要进行修改
+    var avatarPaths = {
+        chat1: {
+            user: 'static/images/chat1-user-avatar.png',
+            bot: 'static/images/chat1-bot-avatar.png'
+        },
+        chat2: {
+            user: 'static/images/chat2-user-avatar.png',
+            bot: 'static/images/chat2-bot-avatar.png'
+        },
+        chat3: {
+            user: 'static/images/chat3-user-avatar.png',
+            bot: 'static/images/chat3-bot-avatar.png'
+        },
+        chat4: {
+            user: 'static/images/chat4-user-avatar.png',
+            bot: 'static/images/chat4-bot-avatar.png'
+        },
+        chat5: {
+            user: 'static/images/chat5-user-avatar.png',
+            bot: 'static/images/chat5-bot-avatar.png'
+        }
+    };
+
     // 加载初始聊天历史
     var initialUserId = $('#user-id').val(); // 获取用户ID
     var initialChatId = $('#chat-id').val();
@@ -17,7 +41,7 @@ $(document).ready(function() {
             return;
         }
 
-        $('#chatbox').append(createMessageHtml('You', message, 'user'));
+        $('#chatbox').append(createMessageHtml('You', message, 'user', chat_id));
         $.ajax({
             url: '/reply',
             method: 'POST',
@@ -33,7 +57,7 @@ $(document).ready(function() {
                         // 添加所有消息到聊天框
                         for (var i = 0; i < data.messages.length; i++) {
                             var message = data.messages[i];
-                            $('#chatbox').append(createMessageHtml(message.username, message.message, message.username === 'Bot' ? 'bot' : 'user'));
+                            $('#chatbox').append(createMessageHtml(message.username, message.message, message.username === 'Bot' ? 'bot' : 'user', chat_id));
                         }
                         // Scroll to the bottom
                         $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
@@ -49,7 +73,7 @@ $(document).ready(function() {
     $('.chat-link').click(function(event) {
         event.preventDefault();  // 阻止链接的默认行为
         var chatId = $(this).data('chat-id');  // 假设聊天链接有一个 data-chat-id 属性，包含聊天的 ID
-        var userId = $('#user-id').val(); // 获取用户I
+        var userId = $('#user-id').val(); // 获取用户ID
         loadChatHistory(userId, chatId);
     });
 
@@ -59,22 +83,22 @@ $(document).ready(function() {
                 if (data.error) {
                     alert(data.error);
                 } else {
-                    $('#chatbox').empty();  // Clear the chatbox
-                    // Add all messages to the chatbox
+                    $('#chatbox').empty();  // 清空聊天框
+                    // 添加所有消息到聊天框
                     for (var i = 0; i < data.messages.length; i++) {
                         var message = data.messages[i];
-                        $('#chatbox').append(createMessageHtml(message.username, message.message, message.username === 'Bot' ? 'bot' : 'user'));
+                        $('#chatbox').append(createMessageHtml(message.username, message.message, message.username === 'Bot' ? 'bot' : 'user', chatId));
                     }
                     // Scroll to the bottom
                     $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
                 }
             } catch (error) {
-                console.error('Error processing response:', error);
+                console.error('处理响应时出错：', error);
             }
         });
     }
 
-    // Handle chat window switch
+    // 切换聊天窗口
     $('.chat').click(function() {
         $('.chat').removeClass('active'); // 移除其他聊天的 'active' 类名
         $(this).addClass('active'); // 给被点击的聊天添加 'active' 类名
@@ -87,9 +111,9 @@ $(document).ready(function() {
         loadChatHistory(userId, target);
     });
 
-    // Handle API key form submission
+    // 处理 API key 表单提交
     $('#api-key-form').submit(function(e) {
-        e.preventDefault();  // Prevent the form from being submitted normally
+        e.preventDefault();  // 阻止表单正常提交
         var apiKey = $('#api-key').val();
 
         if (!apiKey) {
@@ -106,17 +130,17 @@ $(document).ready(function() {
         });
     });
 
-    // Handle chat clear button click
+    // 清除聊天记录按钮点击处理
     $('#clear-chat').click(function() {
         var chat_id = $("#chat-id").val();
         var user_id = $('#user-id').val(); // 获取用户ID
         if (confirm('你确定要清空所有聊天记录吗？')) {
-            fetch('/clear_chat/' + chat_id + '/' + user_id, {  // Include user_id in the request
+            fetch('/clear_chat/' + chat_id + '/' + user_id, {  // 包括 user_id 在请求中
                 method: 'POST',
             }).then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Clear the chatbox and refresh the page
+                    // 清空聊天框并刷新页面
                     $('#chatbox').html('');
                     location.reload();
                 } else {
@@ -126,8 +150,8 @@ $(document).ready(function() {
         }
     });
 
-    function createMessageHtml(username, message, userType) {
-        var avatar = 'static/images/' + (userType === 'bot' ? 'bot-avatar.png' : 'user-avatar.png');
+    function createMessageHtml(username, message, userType, chatId) {
+        var avatar = avatarPaths[chatId][userType];
         return '<p class="' + userType + '-message"><img class="avatar" src="' + avatar + '"> ' + username + ': ' + message + '</p>';
     }
 });
