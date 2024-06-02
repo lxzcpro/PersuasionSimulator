@@ -9,6 +9,8 @@ import os
 import time
 import json
 
+os.system("python utils/add_prompt.py")
+
 app = Flask(__name__)
 app.secret_key = 'mysecret'
 app.config["MONGO_URI"] = "mongodb://localhost:27017/Test"
