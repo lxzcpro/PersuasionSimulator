@@ -1,5 +1,8 @@
-flask
-flask_pymongo
-werkzeug
-dashscope
-pymongo
+dashscope==1.14.1
+Flask==3.0.3
+Flask_PyMongo==2.3.0
+gradio==4.32.2
+pymongo==4.7.1
+torch==2.2.1
+transformers==4.38.2
+Werkzeug==3.0.3

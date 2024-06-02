@@ -59,6 +59,27 @@ if __name__ == '__main__':
 
 The Flask application will be available at `http://localhost:5000`, and MongoDB will be available at `localhost:27017`.
 
+### Depoly by Kubernetes
+
+```bash
+kubectl apply -f frontend-tcp-service.yaml,redis-master-service.yaml,redis-slave-service.yaml,frontend-deployment.yaml,redis-master-deployment.yaml,redis-slave-deployment.yaml
+```
+#### Accessing Your Application
+
+To access your application, follow these steps based on your environment:
+
+##### Using Minikube
+If you are using `minikube` during development, execute the following command to access your service:
+```bash
+minikube service frontend
+```
+##### Using a Cloud Service or Other Environments
+If you are using a cloud service or another environment, check the IP used by the service with the following command:
+```bash
+kubectl describe svc frontend
+```
+The output will display detailed information about the service, including the IP address and ports.
+
 ## Gradio Tool for Analysis
 We provide a tool based on Gradio in [Tools.py](./Tools.py) which helps you to do some sentiment analysis and gives you some suggested responses by the language model.
 
