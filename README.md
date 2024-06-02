@@ -1,16 +1,26 @@
 # Persuasion Simulator
 
-A final project for CST1000 in Westlake University. Not implement.
+A final project for CST1000 at Westlake University. (2024 Spring)
+
+This is a chat application built with Flask and MongoDB. It allows users to register, log in, send messages, and interact with a chatbot.
+
+## Features
+
+- User registration and login
+- Message sending between users
+- Interaction with a chatbot
+- Storage and retrieval of chat history
 
 ## Installation (For Direct use)
 ### Create a virtual environment
 ```
-conda create -n Persuation python=3.10
-conda activate Persuation
+conda create -n Persuasion python=3.10
+conda activate Persuasion
 ```
 ### Install packages
 ```
-bash environment.sh  
+bash environment.sh (linux)
+pip install -r requirements.txt (windows/linux)
 ```
 ## Usage
 
@@ -21,7 +31,9 @@ First, you need to start the MongoDB server. Then, you can start the Flask serve
 ```bash
 python website.py
 ```
-Now, you can access the simulator system in your browser at `http://localhost:5000`.
+The application will run on port 5000 by default.
+
+To use the application, open your browser and visit http://localhost:5000. You will see the main interface of the application. You can register a new user and log in with this user. After logging in, you can send messages and see the responses from the chatbot.
 
 ### Docker Compose
 
@@ -46,6 +58,14 @@ if __name__ == '__main__':
 4. Run `docker-compose up` in the project directory.
 
 The Flask application will be available at `http://localhost:5000`, and MongoDB will be available at `localhost:27017`.
+
+## Gradio Tool for Analysis
+We provide a tool based on Gradio in [Tools.py](./Tools.py) which helps you to do some sentiment analysis and gives you some suggested responses by the language model.
+
+Before you run the Tools.py, you need to set your API:
+```bash
+export DASHSCOPE_API_KEY=YOUR_API
+```
 
 ## Contributing
 
