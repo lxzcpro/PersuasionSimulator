@@ -18,8 +18,8 @@ $(document).ready(function() {
             bot: 'static/images/chat4-bot-avatar.png'
         },
         chat5: {
-            user: 'static/images/chat5-user-avatar.png',
-            bot: 'static/images/chat5-bot-avatar.png'
+            user: 'static/images/chat4-user-avatar.png',
+            bot: 'static/images/chat5-bot-avatar.jpg'
         }
     };
 

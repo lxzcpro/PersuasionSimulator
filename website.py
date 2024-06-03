@@ -19,6 +19,7 @@ client = PyMongo(app)
 users_collection = client.db.users
 messages_collection = client.db.messages
 chat_settings_collection = client.db.chat_settings
+feedback_collection = client.db.feedback
 
 def to_json(data):
     return json_util.dumps(data)
@@ -195,6 +196,22 @@ def contact():
 @app.route('/tools')
 def tools():
     return render_template('tools.html')
+
+@app.route('/submit_message', methods=['POST'])
+def submit_message():
+    name = request.form['name']
+    email = request.form['email']
+    message = request.form['message']
+    timestamp = datetime.utcnow()
+    
+    feedback_collection.insert_one({
+        "name": name,
+        "email": email,
+        "message": message,
+        "timestamp": timestamp
+    })
+    
+    return jsonify({"success": True, "message": "Your message has been sent successfully."})
 
 
 if __name__ == '__main__':
