@@ -1,14 +1,14 @@
 body {
-    font-family: 'Roboto', sans-serif; /* 更现代的字体 */
-    background-image: linear-gradient(52deg, #2daddb, #92ada5, #bdae6f, #dbaf2a); /* 添加背景图片 */
-    background-size: cover; /* 背景图片适应屏幕大小 */
-    background-position: center; /* 背景图片居中 */
+    font-family: 'Roboto', sans-serif; 
+    background-image: linear-gradient(52deg, #2daddb, #92ada5, #bdae6f, #dbaf2a); 
+    background-size: cover;
+    background-position: center;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: all 0.3s ease; /* 添加过渡效果 */
+    transition: all 0.3s ease; 
 }
 
 #title {
@@ -42,6 +42,26 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影 */
     margin-bottom: 20px; /* 增加底部间距 */
     transition: all 0.3s ease; /* 添加过渡效果 */
+}
+
+@media only screen and (max-width: 600px) {
+    #chatbox {
+        width: 100%;
+        height: auto;
+    }
+
+    #title, #description {
+        font-size: 1.5em;
+    }
+
+    #sidebar {
+        width: 100%;
+        height: auto;
+    }
+
+    #container {
+        flex-direction: column;
+    }
 }
 
 #chatbox p {

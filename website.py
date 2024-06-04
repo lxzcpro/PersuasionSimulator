@@ -18,7 +18,6 @@ client = PyMongo(app)
 
 users_collection = client.db.users
 messages_collection = client.db.messages
-chat_settings_collection = client.db.chat_settings
 feedback_collection = client.db.feedback
 
 def to_json(data):
@@ -144,7 +143,7 @@ def register():
             users_collection.insert_one({"username": username, "password": hashed_password})
             return jsonify({"message": "User registered successfully", "success": True})
     else:
-        return render_template('login.html')  # Assuming you have a register.html file in your templates folder
+        return render_template('login.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -157,11 +156,11 @@ def login():
         elif not check_password_hash(user["password"], password):
             return jsonify({"message": "Error: Incorrect password", "success": False})
         else:
-            session['username'] = username  # Store the username in the session
-            session['user_id'] = str(user['_id'])  # Store the user_id in the session
+            session['username'] = username
+            session['user_id'] = str(user['_id'])
             return jsonify({"message": "User logged in successfully", "success": True})
     else:
-        return render_template('login.html')  # Assuming you have a login.html file in your templates folder
+        return render_template('login.html')
 
     
 @app.route('/logout', methods=['POST'])
